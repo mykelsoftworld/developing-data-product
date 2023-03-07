@@ -10,26 +10,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
-The data for this map is taken from the Sacramento Crime January 2006 dataset which contains 7,584 crime records as made available by the Sacramento Police Department. The same is available here: http://samplecsvs.s3.amazonaws.com/SacramentocrimeJanuary2006.csv 
+The data for this map is taken from the Abuja Nigeria
 
-## Reading Data
-
-Reading data from the given url and subsetting to extract 800 random samples out of the 7000+ records.  
 
 ```{r, echo=TRUE, results=FALSE}
-data <- "http://samplecsvs.s3.amazonaws.com/SacramentocrimeJanuary2006.csv"
-df <- read.csv(url(data))
-df <- df[sample(nrow(df), 800), c(8,9)]
+set.seed(2023-03-07)
+df <- data.frame(lat = runif(20, min = 9.04, max = 9.05),
+                 lng = runif(20, min = 7.48, max = 7.49))
 ```
  
 
 ## Plotting Map
 
-The map below shows a clustered view of all the spots where crimes were recorded by the Sacremento Police Department in 2006. 
+The map below shows a clustered view of random spots in Abuja
 
 ```{r Leaflet, echo=TRUE}
 #install.packages('leaflet')
 library(leaflet)
+
 df %>%
   leaflet() %>%
   addTiles() %>%
