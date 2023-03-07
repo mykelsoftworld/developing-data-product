@@ -10,22 +10,28 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
+The data for this map is taken from the Sacramento Crime January 2006 dataset which contains 7,584 crime records as made available by the Sacramento Police Department. The same is available here: http://samplecsvs.s3.amazonaws.com/SacramentocrimeJanuary2006.csv 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Reading Data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Reading data from the given url and subsetting to extract 800 random samples out of the 7000+ records.  
 
-```{r cars}
-install.packages("leaflet")
+```{r, echo=TRUE, results=FALSE}
+data <- "http://samplecsvs.s3.amazonaws.com/SacramentocrimeJanuary2006.csv"
+df <- read.csv(url(data))
+df <- df[sample(nrow(df), 800), c(8,9)]
+```
+ 
+
+## Plotting Map
+
+The map below shows a clustered view of all the spots where crimes were recorded by the Sacremento Police Department in 2006. 
+
+```{r Leaflet, echo=TRUE}
+#install.packages('leaflet')
 library(leaflet)
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(clusterOptions = markerClusterOptions())
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
