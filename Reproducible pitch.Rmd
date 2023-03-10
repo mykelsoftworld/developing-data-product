@@ -64,9 +64,6 @@ head(mtcars, 3)
 ## Analysis - Main Code
 
 ```{r}
-library("slider")
-
-
 
 mtcars$mpgsp <- ifelse(mtcars$mpg - 20 > 0, mtcars$mpg - 20, 0) 
     model1 <- lm(hp ~ mpg, data = mtcars)
